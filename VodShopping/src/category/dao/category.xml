@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="category.bean.Category" table="category">
+		<id name="category_seq" column="category_seq" type="java.lang.Integer" >
+			<generator class="assigned"></generator>
+		</id>	
+		<property name="category_name" column="category_name" type="java.lang.String" not-null="true" />
+		<property name="category_group" column="category_group" type="java.lang.Integer" />
+		<property name="category_level" column="category_level" type="java.lang.Integer" />
+		<property name="category_son" column="category_son" type="java.lang.Integer" />
+		
+	</class>
+</hibernate-mapping>

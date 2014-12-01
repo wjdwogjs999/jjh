@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	<context:annotation-config />
+	 
+	 <!-- TransactionManager -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3333/test" />
+		<property name="username" value="root" />
+		<property name="password" value="wogjs5935" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>category.bean.Category</value>
+				<value>content.bean.ContentDTO</value>
+				<value>info.bean.InfoDTO</value>
+				<value>member.bean.MemberDTO</value>
+				<value>order.bean.OrderDTO</value>
+				<value>member.bean.ZipcodeDTO</value>
+				<value>main.bean.IndexTestDTO</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		p:sessionFactory-ref="sessionFactory">
+	</bean>
+	
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- dao bean설정 -->
+	<bean id="memberDao" class="member.dao.MemberDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="categoryDao" class="category.dao.CategoryDAOImpl" />
+	<bean id="contentDao" class="content.dao.ContentDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="infoDao" class="info.dao.InfoDAOImpl" >
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="orderDao" class="order.dao.OrderDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<!-- service bean 설정 -->
+	<bean id="memberService" class="member.service.MemberServiceImpl" />
+	<bean id="categoryService" class="category.service.CategoryServiceImpl"/>
+	<bean id="infoService" class="info.service.InfoServiceImpl" />
+	<bean id="contentService" class="content.service.ContentServiceImpl"/>
+	<bean id="orderService" class="order.service.OrderServiceImpl"/>
+		
+	<!-- 페이징 설정 -->
+	<bean id="infoPaging" class="info.bean.InfoPaging"/>
+	<bean id="contentPaging" class="content.bean.ContentPaging" />
+	<bean id="memberPaging" class="member.bean.MemberPaging" />
+	<!-- 암호화 -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" /> 
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="content.bean.ContentDTO" table="content">
+		<id name="contentCode" column="contentCode" type="java.lang.Integer" >
+			<generator class="identity"></generator>
+		</id>	
+		<property name="contentName" column="contentName" type="java.lang.String" not-null="true" />
+		<property name="contentEnglishName" column="contentEnglishName" type="java.lang.String" not-null="true" />
+		<property name="price" column="price" type="java.lang.Integer" not-null="true" />
+		<property name="director" column="director" type="java.lang.String" not-null="true" />
+		<property name="actors" column="actors" type="java.lang.String" not-null="true" />
+		<property name="releasedDate" column="releasedDate" type="java.util.Date" not-null="true" />
+		<property name="storyLine" column="storyLine" type="java.lang.String" not-null="true" />
+		<property name="category" column="category" type="java.lang.String" not-null="true" />
+		<property name="contentImage" column="contentImage" type="java.lang.String" not-null="true" />
+		<property name="vod" column="vod" type="java.lang.String" not-null="true" />
+		<property name="buyCount" column="buyCount" type="java.lang.Integer" not-null="false" />
+	</class>
+</hibernate-mapping>

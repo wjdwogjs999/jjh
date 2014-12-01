@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="member.bean.MemberDTO" table="users">
+		<id name="id" column="id" type="java.lang.String" >
+			<generator class="assigned"></generator>
+		</id>
+		<property name="pwd" column="pwd" type="java.lang.String" not-null="true" />
+		<property name="name" column="name" type="java.lang.String" not-null="true" />
+		<property name="gender" column="gender" type="java.lang.Integer" not-null="true" />
+		<property name="b_year" column="b_year" type="java.lang.Integer" not-null="true" />
+		<property name="b_month" column="b_month" type="java.lang.Integer" not-null="true" />
+		<property name="b_day" column="b_day" type="java.lang.Integer" not-null="true" />
+		<property name="email" column="email" type="java.lang.String" not-null="true" />
+		<property name="zipcode1" column="zipcode1" type="java.lang.String" not-null="false" />
+		<property name="zipcode2" column="zipcode2" type="java.lang.String" not-null="false" />
+		<property name="addr1" column="addr1" type="java.lang.String" not-null="false" />
+		<property name="addr2" column="addr2" type="java.lang.String" not-null="false" />
+		<property name="phone1" column="phone1" type="java.lang.String" not-null="false" />
+		<property name="phone2" column="phone2" type="java.lang.String" not-null="false" />
+		<property name="phone3" column="phone3" type="java.lang.String" not-null="false" />
+	</class>
+	
+	<class name="member.bean.ZipcodeDTO" table="zipcode">
+		<id name="seq" column="seq" type="java.lang.Integer" >
+			<generator class="assigned"></generator>
+		</id>	
+		<property name="zipcode" column="zipcode" type="java.lang.String" not-null="true" />
+		<property name="sido" column="sido" type="java.lang.String" not-null="true" />
+		<property name="gugun" column="gugun" type="java.lang.String" not-null="false" />
+		<property name="dong" column="dong" type="java.lang.String" not-null="false" />
+		<property name="ri" column="ri" type="java.lang.String" not-null="false" />
+		<property name="bunji" column="bunji" type="java.lang.String" not-null="false" />
+	</class>
+</hibernate-mapping>

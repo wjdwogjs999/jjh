@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="info.bean.InfoDTO" table="info">
+		<id name="infoCode" column="infoCode" type="java.lang.Integer" >
+			<generator class="identity"></generator>
+		</id>	
+		<property name="infoSubject" column="infoSubject" type="java.lang.String" not-null="true" />
+		<property name="infoContent" column="infoContent" type="java.lang.String" not-null="true" />
+		<property name="logtime" column="logtime" type="java.util.Date" not-null="false" />
+		<property name="hit" column="hit" type="java.lang.Integer" not-null="false" />
+	</class>
+</hibernate-mapping>
