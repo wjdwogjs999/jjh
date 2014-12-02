@@ -36,7 +36,7 @@
 				<value>member.bean.MemberDTO</value>
 				<value>order.bean.OrderDTO</value>
 				<value>member.bean.ZipcodeDTO</value>
-				<value>main.bean.IndexTestDTO</value>
+				<value>order.bean.OrderItemDTO</value>
 			</list>
 		</property>
 	</bean>

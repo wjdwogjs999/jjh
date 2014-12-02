@@ -1,6 +1,8 @@
 package order.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,11 +11,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import member.bean.MemberDTO;
+
+import org.hibernate.annotations.Cascade;
 
 
 @Entity
@@ -23,14 +30,9 @@ public class OrderDTO {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="orderCode")
 	private int orderCode;
-	@Column(name="orderItems", nullable=false)
-	private String orderItems;
-	@Column(name="orderItemsName")
-	private String orderItemsName;
 	//¿Ü·¡Å°
 	@ManyToOne(fetch=FetchType.LAZY)
 	private MemberDTO member;
-	
 	@Column(name="totalMoney")
 	private int totalMoney;
 	@Column(name="payment")
@@ -38,18 +40,23 @@ public class OrderDTO {
 	@Column(name="orderDate")
 	private Date orderDate;
 	
+	@OneToMany(fetch=FetchType.LAZY)
+	@Cascade({org.hibernate.annotations.CascadeType.ALL})
+	@JoinTable(name="order_orderItem",joinColumns=@JoinColumn(name="orderCode")
+	)
+	private List<OrderItemDTO> orderItem=new ArrayList<OrderItemDTO>();
+	
+	@Transient
+	private String orderItems;
+	@Transient
+	private String orderItemsName;
+	
 	public int getOrderCode() {
 		return orderCode;
 	}
 	
 	public void setOrderCode(int orderCode) {
 		this.orderCode = orderCode;
-	}
-	public String getOrderItems() {
-		return orderItems;
-	}
-	public void setOrderItems(String orderItems) {
-		this.orderItems = orderItems;
 	}
 
 	public MemberDTO getMember() {
@@ -79,6 +86,22 @@ public class OrderDTO {
 		this.orderDate = orderDate;
 	}
 
+	public List<OrderItemDTO> getOrderItem() {
+		return orderItem;
+	}
+
+	public void setOrderItem(List<OrderItemDTO> orderItem) {
+		this.orderItem = orderItem;
+	}
+
+	public String getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(String orderItems) {
+		this.orderItems = orderItems;
+	}
+
 	public String getOrderItemsName() {
 		return orderItemsName;
 	}
@@ -86,5 +109,6 @@ public class OrderDTO {
 	public void setOrderItemsName(String orderItemsName) {
 		this.orderItemsName = orderItemsName;
 	}	
+	
 	
 }

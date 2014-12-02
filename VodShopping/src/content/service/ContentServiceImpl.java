@@ -57,8 +57,8 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	@Transactional
-	public List<ContentDTO> contentListAllGet() {
-		return contentDao.contentListAllGet();
+	public List<ContentDTO> contentListAllGet(ContentDTO content) {
+		return contentDao.contentListAllGet(content);
 	}
 
 	@Override

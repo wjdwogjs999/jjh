@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import content.bean.ContentDTO;
+import content.dao.ContentDAO;
 import order.bean.OrderDTO;
+import order.bean.OrderItemDTO;
 import order.dao.OrderDAO;
 
 @Service
@@ -19,6 +22,8 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDao;
 	@Autowired
 	private MemberDAO memberDao;
+	@Autowired
+	private ContentDAO contentDao;
 	
 	@Override
 	@Transactional
@@ -28,10 +33,19 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public void orderInsert(OrderDTO order, MemberDTO user) {
+	public void orderInsert(OrderDTO order, MemberDTO user, String[] orderItem) {
 		memberDao.memberUpdate(user);
 		//relation Ã³¸®
 		user.addOrder(order);
+		for(int i=0;i<orderItem.length;i++){
+			OrderItemDTO item = new OrderItemDTO();
+			item.setOrder(order);
+			item.setMember(user);
+			item.setContent(contentDao.getContent(Integer.parseInt(orderItem[i])));
+			user.getOrderItem().add(item);
+			order.getOrderItem().add(item);
+			orderDao.orderItemInsert(item);
+		}
 		orderDao.orderInsert(order);
 	}
 
@@ -56,10 +70,17 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.orderListGetByYear(year);
 	}
 
+
 	@Override
 	@Transactional
-	public void testSave(IndexTestDTO dto) {
-		orderDao.testSave(dto);
+	public List<OrderItemDTO> myOrderItemListGet(MemberDTO member) {
+		return orderDao.myOrderItemListGet(member);
+	}
+
+	@Override
+	@Transactional
+	public void orderItemUpdate(OrderItemDTO orderItem) {
+		orderDao.orderItemUpdate(orderItem);		
 	}
 
 }

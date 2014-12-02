@@ -22,7 +22,9 @@ tr.shown td.details-control {
 <script type="text/javascript">
 $(document).ready(function() {
 	 var table = $('#example').DataTable( {
-		 "ajax": "/VodShopping/content/contentListGet.do",
+		 "bProcessing": true,
+	     "bServerSide": true,
+	     "sAjaxSource": "/VodShopping/content/contentListGet.do",
 		 "columns": [
 	                    {
 	                        "class":          'details-control',

@@ -16,9 +16,14 @@ import javax.persistence.Transient;
 
 
 
-import org.hibernate.annotations.Cascade;
+
+
 
 import order.bean.OrderDTO;
+import order.bean.OrderItemDTO;
+
+import org.hibernate.annotations.Cascade;
+
 
 @Entity
 @Table(name="users")
@@ -69,8 +74,6 @@ public class MemberDTO{
 	@Column(name="phone3")
 	private String phone3;
 	
-	@Column(name="inheritTime")
-	private String inheritTime;
 	//∆‰¿Ã¬°
 	@Transient
 	private int startIndex;
@@ -82,7 +85,13 @@ public class MemberDTO{
 	@JoinTable(name="users_ordertable",joinColumns=@JoinColumn(name="id"),
 				inverseJoinColumns=@JoinColumn(name="orderCode")
 	)
-	private List<OrderDTO> order;
+	private List<OrderDTO> order=new ArrayList<OrderDTO>();
+	
+	@OneToMany(fetch=FetchType.LAZY)
+	@Cascade({org.hibernate.annotations.CascadeType.ALL})
+	@JoinTable(name="users_orderItem",joinColumns=@JoinColumn(name="id")
+	)
+	private List<OrderItemDTO> orderItem=new ArrayList<OrderItemDTO>();
 	
 	public int getStartIndex() {
 		return startIndex;
@@ -202,11 +211,11 @@ public class MemberDTO{
 		order.setMember(null);
 		return order;
 	}
-	public String getInheritTime() {
-		return inheritTime;
+	public List<OrderItemDTO> getOrderItem() {
+		return orderItem;
 	}
-	public void setInheritTime(String inheritTime) {
-		this.inheritTime = inheritTime;
+	public void setOrderItem(List<OrderItemDTO> orderItem) {
+		this.orderItem = orderItem;
 	}
 	
 	

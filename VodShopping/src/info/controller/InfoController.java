@@ -46,24 +46,26 @@ public class InfoController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("categoryList", getMenu());
 		mav.addObject("display", "/info/infoList.jsp");
-		mav.addObject("pg", pg);
-		mav.addObject("tot", infoService.totGet());
 		mav.setViewName("/main/index");
 		return mav;
 	}
 	
 	@RequestMapping("/infoListGet")
-	public @ResponseBody void infoListGet(HttpServletResponse response,int startParam,int limitParam){
-		System.out.println(startParam+" , "+limitParam);
+	public @ResponseBody void infoListGet(HttpServletResponse response,int page, int start, int limit){
+		System.out.println(page+" , "+start+","+limit);
 		InfoDTO info = new InfoDTO();
-		info.setStartIndex(startParam);
-		info.setEndIndex(limitParam);
+		info.setStartIndex(start);
+		info.setEndIndex(limit);
 		List<InfoDTO> infoList = infoService.infoListGet(info);
 		JSONArray jsonArr = makeInfoList(infoList);
-		System.out.println(jsonArr.toString());
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("success", true);
+		jsonObj.put("total", infoService.totGet());
+		jsonObj.put("data", jsonArr);
+		System.out.println(jsonObj.toString());
 		response.setCharacterEncoding("UTF-8");
         try {
-			response.getWriter().write(jsonArr.toJSONString());
+			response.getWriter().write(jsonObj.toJSONString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -86,7 +88,7 @@ public class InfoController {
 	}
 	
 	@RequestMapping("/infoView")
-	public ModelAndView infoView(@RequestParam int pg, @RequestParam int infoCode){
+	public ModelAndView infoView(@RequestParam int infoCode){
 		InfoDTO info = new InfoDTO();
 		info.setInfoCode(infoCode);
 		info = infoService.infoGet(info);
@@ -95,7 +97,6 @@ public class InfoController {
 		mav.addObject("categoryList", getMenu());
 		mav.addObject("display", "/info/infoView.jsp");
 		mav.addObject("info", info);
-		mav.addObject("pg", pg);
 		mav.setViewName("/main/index");
 		return mav;
 	}

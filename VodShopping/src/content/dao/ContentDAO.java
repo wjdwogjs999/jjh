@@ -16,7 +16,7 @@ public interface ContentDAO {
 	//delete
 	void deleteContent(ContentDTO content) throws HibernateException;
 	//list
-	List<ContentDTO> contentListAllGet();
+	List<ContentDTO> contentListAllGet(ContentDTO content);
 	List<ContentDTO> bestContentGet();
 	List<ContentDTO> getContentList(ContentDTO content);
 	List<ContentDTO> contentListGet(ContentDTO content);

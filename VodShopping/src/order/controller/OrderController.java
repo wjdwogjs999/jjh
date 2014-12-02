@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import member.bean.MemberDTO;
 import order.bean.OrderDTO;
+import order.bean.OrderItemDTO;
 import order.service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,17 +58,8 @@ public class OrderController {
 	@RequestMapping("/order")
 	public ModelAndView order(@RequestParam String orderItems, @RequestParam int totalMoney, HttpSession session, int itemCount){
 		OrderDTO order = new OrderDTO();
-		String orderItemsName="";
-		if(itemCount==2){
-			String[] items = orderItems.split("-");
-			int contentCode=Integer.parseInt(items[0]);
-			orderItemsName=contentService.contentGet(contentCode).getContentName()+"외 "+(items.length-1)+"종";
-		}else if(itemCount==1){
-			int contentCode=Integer.parseInt(orderItems);
-			orderItemsName = contentService.contentGet(contentCode).getContentName();
-		}
 		order.setOrderItems(orderItems);
-		order.setOrderItemsName(orderItemsName);
+		order.setOrderItemsName("임시");
 		order.setTotalMoney(totalMoney);	
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("order", order);
@@ -83,11 +75,12 @@ public class OrderController {
 		OrderDTO order = new OrderDTO();
 		//ordertable에 넣기
 		order.setOrderItems(orderItems);
-		order.setOrderItemsName(good_name);
 		order.setTotalMoney(good_mny);
 		order.setPayment(Pay_Type);
 		order.setOrderDate(new Date());
-		orderService.orderInsert(order,user);
+		String[] orderItem = order.getOrderItems().split("-");
+		
+		orderService.orderInsert(order,user,orderItem);
 		//content의 buyCount 1증가!!
 		String[] arr = order.getOrderItems().split("-");
 		if(arr.length!=1){

@@ -45,7 +45,7 @@
 			<!-- bottom메뉴 -->
 			<!-- 목록버튼 -->
 		    <div style="padding:10px; float:left; text-align:left;">
-		        <img onclick="location.href='/VodShopping/info/infoList.do?pg=${pg}'" src="../image/list_btn.jpg" width="40px" height="28px">
+		        <img onclick="history.back()" src="../image/list_btn.jpg" width="40px" height="28px">
 		    </div>
 		    <c:if test="${user.id=='admin' }">
 			    <div style="float: right; margin-top:10px;">

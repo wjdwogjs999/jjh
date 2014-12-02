@@ -29,8 +29,18 @@ public class ContentDAOImpl extends HibernateDaoSupport implements ContentDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ContentDTO> contentListAllGet() {
-		return (List<ContentDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(ContentDTO.class).addOrder(Order.asc("contentCode")));
+	public List<ContentDTO> contentListAllGet(ContentDTO content) {
+		List<ContentDTO> list = null;
+		if(content.getSearchType()!=null){
+			list = (List<ContentDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(ContentDTO.class)
+					.add(Restrictions.or(Restrictions.like("contentName", "%"+content.getSword()+"%"),
+										Restrictions.like("director", "%"+content.getSword()+"%")))
+					.addOrder(Order.asc("contentCode")),content.getStartIndex(),content.getEndIndex());
+		}else{
+			list = (List<ContentDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(ContentDTO.class).addOrder(Order.asc("contentCode")),content.getStartIndex(),content.getEndIndex());
+		}
+			
+		return list;
 	}
 
 	@Override
@@ -82,7 +92,13 @@ public class ContentDAOImpl extends HibernateDaoSupport implements ContentDAO {
 	public int getContentCountGet(ContentDTO content) {
 		Criteria criteria;
 		if((content.getCategory()==null)){
-			criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(ContentDTO.class);
+			if(content.getSearchType()!=null){
+				criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(ContentDTO.class)
+						.add(Restrictions.or(Restrictions.like("contentName", "%"+content.getSword()+"%"),
+								Restrictions.like("director",  "%"+content.getSword()+"%")));
+			}else{
+				criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(ContentDTO.class);
+			}
 		}else{
 			if(content.getCategory().split("-").length==1){
 				criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(ContentDTO.class).add(Restrictions.like("category", content.getCategory()+"-%"));

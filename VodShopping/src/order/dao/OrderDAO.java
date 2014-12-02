@@ -7,7 +7,9 @@ import member.bean.MemberDTO;
 
 import org.hibernate.HibernateException;
 
+import content.bean.ContentDTO;
 import order.bean.OrderDTO;
+import order.bean.OrderItemDTO;
 
 public interface OrderDAO {
 
@@ -21,6 +23,10 @@ public interface OrderDAO {
 
 	List<Long> orderListGetByYear(int year);
 
-	void testSave(IndexTestDTO dto);
+	List<OrderItemDTO> myOrderItemListGet(MemberDTO member);
+
+	void orderItemInsert(OrderItemDTO item);
+	
+	void orderItemUpdate(OrderItemDTO item);
 
 }

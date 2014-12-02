@@ -129,7 +129,7 @@
 			      <!-- 상품명(good_name) : 필수 -->
 			      <tr>
 			          <td>상품명(good_name)</td>
-			          <td><input type="text" name="good_name" value="${order.orderItemsName }" readonly="readonly"/>
+			          <td><input type="text" name="good_name" value="${order.orderItemsName}" readonly="readonly"/>
 			          <input type="hidden" name="orderItems" value="${order.orderItems }"/>
 			          </td>
 			      </tr>

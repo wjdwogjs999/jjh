@@ -1,14 +1,23 @@
 package content.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name="content")
@@ -50,6 +59,8 @@ public class ContentDTO {
 	
 	@Column(name="buyCount")
 	private int buyCount;
+	
+	
 	//DB에는 없는 애들
 	@Transient
 	private int startIndex;
@@ -172,5 +183,8 @@ public class ContentDTO {
 	public void setBuyCount(int buyCount) {
 		this.buyCount = buyCount;
 	}
+
+	
+	
 	
 }

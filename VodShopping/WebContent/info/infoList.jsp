@@ -9,8 +9,6 @@
 <script type="text/javascript" src="../jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="infoList.js"></script>
 <form name="infoListForm" method="POST" action="">
-<input type="hidden" value="${pg }" id="pg">
-<input type="hidden" value="${tot }" id="tot">
 	<div style="width:700px; height:100%; margin:20px 20px;"> <!-- 전체 틀 div -->
 		<div id="display"></div>
 		<br/>

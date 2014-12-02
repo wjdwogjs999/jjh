@@ -15,7 +15,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Service;
 
+import content.bean.ContentDTO;
 import order.bean.OrderDTO;
+import order.bean.OrderItemDTO;
 
 @Service
 public class OrderDAOImpl extends HibernateDaoSupport implements OrderDAO {
@@ -57,8 +59,21 @@ public class OrderDAOImpl extends HibernateDaoSupport implements OrderDAO {
 		return q.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void testSave(IndexTestDTO dto) {
-		getHibernateTemplate().save(dto);
+	public List<OrderItemDTO> myOrderItemListGet(MemberDTO member) {
+		return (List<OrderItemDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(OrderItemDTO.class).add(Restrictions.eq("member", member)));
 	}
+
+	@Override
+	public void orderItemInsert(OrderItemDTO item) {
+		getHibernateTemplate().saveOrUpdate(item);
+	}
+	
+	@Override
+	public void orderItemUpdate(OrderItemDTO item) {
+		getHibernateTemplate().update(item);
+	}
+
+
 }

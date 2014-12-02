@@ -20,7 +20,7 @@ public interface ContentService {
 
 	List<ContentDTO> bestContentGet();
 
-	List<ContentDTO> contentListAllGet();
+	List<ContentDTO> contentListAllGet(ContentDTO content);
 
 	List<ContentDTO> contentSearchListGet(ContentDTO content);
 

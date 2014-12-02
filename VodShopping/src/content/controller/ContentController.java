@@ -14,6 +14,7 @@ import javax.xml.ws.RequestWrapper;
 import member.bean.MemberDTO;
 import member.service.MemberService;
 import order.bean.OrderDTO;
+import order.bean.OrderItemDTO;
 import order.service.OrderService;
 
 import org.json.simple.JSONArray;
@@ -98,23 +99,14 @@ public class ContentController {
 	@RequestMapping("/contentView")
 	public ModelAndView productview(@RequestParam int contentCode,HttpSession session){
 		int overlap=0;
-			MemberDTO member = (MemberDTO)session.getAttribute("user");
-			List<OrderDTO> list= orderService.myOrderListGet(member);
+		MemberDTO member = (MemberDTO)session.getAttribute("user");
+		List<OrderItemDTO> list= orderService.myOrderItemListGet(member);
 		if(list!=null){
 			for(int i=0;i<list.size();i++){
-				String[] arr = list.get(i).getOrderItems().split("-");
-				if(arr.length!=1){
-					for(int j=0;j<arr.length;j++){
-						if(Integer.parseInt(arr[j])==contentCode)
-							overlap=1;
-					}
-				}else if(arr.length==1){
-					if(Integer.parseInt(arr[0])==contentCode)
-						overlap=1;
-				}
+				if(list.get(i).getContent().getContentCode()==contentCode)
+					overlap=1;
 			}
 		}
-		
 		ContentDTO content = contentService.contentGet(contentCode);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("categoryList", getMenu());
@@ -174,18 +166,20 @@ public class ContentController {
 	@RequestMapping("/videoStart")
 	public ModelAndView videoStart(@RequestParam String vod, int contentCode,HttpSession session){
 		float inheritTime =0;
-		int oldContentCode =0;
+		boolean aleadyViewed =false;
 		MemberDTO member = (MemberDTO)session.getAttribute("user");
-		if(member.getInheritTime()!=null){
-			String[] arr  = member.getInheritTime().split("-");
-			oldContentCode = Integer.parseInt(arr[0]);
-			if(oldContentCode==contentCode){
-				inheritTime = Float.parseFloat(arr[1]);
+		List<OrderItemDTO> list= orderService.myOrderItemListGet(member);
+		for(int i=0;i<list.size();i++){
+			if(list.get(i).getContent().getContentCode()==contentCode){
+				inheritTime = list.get(i).getInheritTime();
+				if(inheritTime>0)
+					aleadyViewed=true;
 			}
 		}
+		System.out.println(inheritTime);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("vod", vod);
-		mav.addObject("aleadyViewed", oldContentCode==contentCode);
+		mav.addObject("aleadyViewed", aleadyViewed);
 		mav.addObject("inheritTime", inheritTime);
 		mav.setViewName("/content/videoStart");
 		return mav;
@@ -277,9 +271,16 @@ public class ContentController {
 	
 	@RequestMapping("/inheritTimeInsert")
 	public @ResponseBody void inheritTimeInsert(float time, int contentCode,HttpServletResponse response,HttpSession session){
-		String inheritTime = contentCode+"-"+time;
 		MemberDTO member = (MemberDTO)session.getAttribute("user");
-		member.setInheritTime(inheritTime);
+		List<OrderItemDTO> list= orderService.myOrderItemListGet(member);
+		OrderItemDTO orderItem = null;
+		for(int i=0;i<list.size();i++){
+			if(list.get(i).getContent().getContentCode()==contentCode){
+				orderItem=list.get(i);
+				orderItem.setInheritTime(time);
+			}
+		}
+		orderService.orderItemUpdate(orderItem);
 		memberService.memberUpdate(member);
         response.setCharacterEncoding("UTF-8");
         try {
@@ -291,8 +292,19 @@ public class ContentController {
 	}
 	
 	@RequestMapping("/contentListGet")
-	public @ResponseBody void contentListGet(HttpServletResponse response){
-		List<ContentDTO> contentListAll = contentService.contentListAllGet();
+	public @ResponseBody void contentListGet(HttpServletResponse response, @RequestParam(required=false)int iDisplayStart, 
+			@RequestParam(required=false)int iDisplayLength, @RequestParam(required=false)String sSearch,
+			String sEcho){
+		System.out.println("시작 : "+iDisplayStart+", 페이지사이즈 : "+iDisplayLength+", 검색어 : "+sSearch);
+		ContentDTO content = new ContentDTO();
+		content.setStartIndex(iDisplayStart);
+		content.setEndIndex(iDisplayLength);
+		if(!sSearch.equals("")){
+			content.setSearchType("search");
+			content.setSword(sSearch);
+		}
+		int tot = contentService.contentCountGet(content);
+		List<ContentDTO> contentListAll = contentService.contentListAllGet(content);
 		JSONArray jsonArr = new JSONArray();
 		for(int i=0;i<contentListAll.size();i++){
 			Map<String,String> map = new HashMap<String, String>();
@@ -303,7 +315,10 @@ public class ContentController {
 			jsonArr.add(map);
 		}
 		JSONObject obj =new JSONObject();
-		obj.put("data", jsonArr);
+		obj.put("sEcho", sEcho);
+		obj.put("iTotalRecords",tot);
+		obj.put("iTotalDisplayRecords",tot);
+		obj.put("aaData", jsonArr);
 		String json = obj.toJSONString();
 		System.out.println(json);
         response.setCharacterEncoding("UTF-8");

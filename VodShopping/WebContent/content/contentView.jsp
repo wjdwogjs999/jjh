@@ -63,9 +63,8 @@ function videoStart(vod, contentCode){
 				<img src="../image/cyworld.gif" onclick="javascript:window.open('http://cyxso.cyworld.com/Login.sk','','width=500 height=400 scrollbars=yes');">
 				</div>
 				<div style="padding-left: 85px; margin-top: 10px">
-				<img src="../image/twitter.png" onclick="javascript:window.open('https://twitter.com/intent/tweet','','width=500 height=400 scrollbars=yes');">
+				<img src="../image/twitter.png" onclick="javascript:window.open('https://twitter.com/intent/tweet?text=${content.contentName}&url=http://172.16.33.98:8080/VodShopping/content/contentView.do?contentCode=${ content.contentCode}&rurl=http://castisVod.com','','width=500 height=400 scrollbars=yes');">
 				<img src="../image/facebook.png" onclick="javascript:window.open('https://www.facebook.com/login.php','','width=500 height=400 scrollbars=yes');">
-				<img src="../image/me2day.png" onclick="javascript:window.open('http://me2day.net/account/login','','width=500 height=400 scrollbars=yes');">
 				<img src="../image/c.png" onclick="javascript:window.open('http://cyxso.cyworld.com/PopUpLogin.sk','','width=500 height=400 scrollbars=yes');">
 				</div>
 		</div>
@@ -105,7 +104,7 @@ function videoStart(vod, contentCode){
 			<img src="../image/cart.jpg" onclick="javascript:cartInsert('${user.id}')" style="width: 87px;height: 44px">
 			</c:if>
 			<c:if test="${overlap==1 }">
-			<img src="../image/see.jpg"  onclick="javascript:videoStart('${content.vod}',${content.contentCode })" style="width: 87px;height: 44px">
+				<img src="../image/see.jpg"  onclick="javascript:videoStart('${content.vod}',${content.contentCode })" style="width: 87px;height: 44px">
 			</c:if>
 			<img src="../image/list.jpg" onclick="history.back()" style="width: 87px;height: 44px">
 			</div>
