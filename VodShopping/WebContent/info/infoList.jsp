@@ -11,13 +11,5 @@
 <form name="infoListForm" method="POST" action="">
 	<div style="width:700px; height:100%; margin:20px 20px;"> <!-- 전체 틀 div -->
 		<div id="display"></div>
-		<br/>
-
-		<!-- 페이징 -->
-		<div style="padding:10px; text-align:left;"><br>
-		    <div style="position:relative; bottom:23px; text-align:center" class="paging" id="paging">
-		    </div> 
-		</div>
-		
 	</div> <!-- 전체 틀 div 끝 -->
 </form>

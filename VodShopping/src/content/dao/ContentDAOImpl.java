@@ -32,14 +32,24 @@ public class ContentDAOImpl extends HibernateDaoSupport implements ContentDAO {
 	public List<ContentDTO> contentListAllGet(ContentDTO content) {
 		List<ContentDTO> list = null;
 		if(content.getSearchType()!=null){
-			list = (List<ContentDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(ContentDTO.class)
-					.add(Restrictions.or(Restrictions.like("contentName", "%"+content.getSword()+"%"),
-										Restrictions.like("director", "%"+content.getSword()+"%")))
-					.addOrder(Order.asc("contentCode")),content.getStartIndex(),content.getEndIndex());
+			if(content.getsSortDir().equals("asc")){
+				list = (List<ContentDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(ContentDTO.class)
+						.add(Restrictions.or(Restrictions.like("contentName", "%"+content.getSword()+"%"),
+											Restrictions.like("director", "%"+content.getSword()+"%")))
+						.addOrder(Order.asc(content.getiSortCol())),content.getStartIndex(),content.getEndIndex());
+			}else{
+				list = (List<ContentDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(ContentDTO.class)
+						.add(Restrictions.or(Restrictions.like("contentName", "%"+content.getSword()+"%"),
+											Restrictions.like("director", "%"+content.getSword()+"%")))
+						.addOrder(Order.desc(content.getiSortCol())),content.getStartIndex(),content.getEndIndex());
+			}
 		}else{
-			list = (List<ContentDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(ContentDTO.class).addOrder(Order.asc("contentCode")),content.getStartIndex(),content.getEndIndex());
+			if(content.getsSortDir().equals("asc")){
+				list = (List<ContentDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(ContentDTO.class).addOrder(Order.asc(content.getiSortCol())),content.getStartIndex(),content.getEndIndex());
+			}else{
+				list = (List<ContentDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(ContentDTO.class).addOrder(Order.desc(content.getiSortCol())),content.getStartIndex(),content.getEndIndex());
+			}
 		}
-			
 		return list;
 	}
 

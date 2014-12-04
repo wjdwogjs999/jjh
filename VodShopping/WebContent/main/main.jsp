@@ -75,7 +75,7 @@ $(function() {
 			<hr width="100%"><br/>
 			<c:if test="${info.size()!=0 }">
 				<c:forEach var="data" items="${info}">
-				<li style="height:100%;"><a href="/VodShopping/info/infoView.do?infoCode=${data.infoCode }&pg=1">${data.infoSubject }</a></li>
+				<li style="height:100%;"><a href="/VodShopping/info/infoView.do?infoCode=${data.infoCode }&hit=${data.hit+1}">${data.infoSubject }</a></li>
 				</c:forEach>
 			</c:if>
 			</ul>

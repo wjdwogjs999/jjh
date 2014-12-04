@@ -8,6 +8,7 @@ Ext.require([
 var startIndex=0;
 var endIndex=10;
 
+//Ext Js로 공지사항 뿌려줌
 Ext.onReady(function(){	
 	var el = Ext.get('display');
 	
@@ -60,15 +61,15 @@ Ext.onReady(function(){
 	});
 	
 	// update panel body on selection change
-	// update panel body on selection change
 	myFormPanel.getSelectionModel().on('selectionchange', function(sm, selectedRecord) {
-        location.href="/VodShopping/info/infoView.do?infoCode="+selectedRecord[0].data.infoCode;        
+        location.href="/VodShopping/info/infoView.do?infoCode="+selectedRecord[0].data.infoCode+"&hit="+(selectedRecord[0].data.hit+1);        
     });
 });
-
+//공지수정
 function infoModify(seq){
 	window.open("/VodShopping/info/infoModifyForm.do?infoCode="+seq, "", "width=850 height=620 left=200 top=100");
 }
+//공지삭제
 function infoDelete(seq){
-	location.href="/VodShopping/info/infoDelete.do?infoCode="+seq+"&pg=1";
+	location.href="/VodShopping/info/infoDelete.do?infoCode="+seq;
 }

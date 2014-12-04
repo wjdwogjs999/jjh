@@ -39,7 +39,7 @@
 				
 				<!-- 공지 -->
 				<div class="infoview_content">
-					${info.infoContent}
+					<pre>${info.infoContent}</pre>
 				</div>
 			</div>
 			<!-- bottom메뉴 -->
@@ -50,7 +50,7 @@
 		    <c:if test="${user.id=='admin' }">
 			    <div style="float: right; margin-top:10px;">
 			    	<input type="button" value="수정" onclick="javascript:infoModify(${info.infoCode})"/>
-			    	<input type="button" value="삭제" onclick="location.href='/VodShopping/info/infoDelete.do?infoCode=${info.infoCode}&pg=${pg }'"/>
+			    	<input type="button" value="삭제" onclick="location.href='/VodShopping/info/infoDelete.do?infoCode=${info.infoCode}'"/>
 			    </div>
 		    </c:if>
 		</div> <!-- div2 내부 전체 틀 끝 -->

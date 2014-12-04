@@ -42,7 +42,7 @@ public class InfoController {
 	}
 	
 	@RequestMapping("/infoList")
-	public ModelAndView infoList(@RequestParam int pg){
+	public ModelAndView infoList(){
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("categoryList", getMenu());
 		mav.addObject("display", "/info/infoList.jsp");
@@ -52,7 +52,6 @@ public class InfoController {
 	
 	@RequestMapping("/infoListGet")
 	public @ResponseBody void infoListGet(HttpServletResponse response,int page, int start, int limit){
-		System.out.println(page+" , "+start+","+limit);
 		InfoDTO info = new InfoDTO();
 		info.setStartIndex(start);
 		info.setEndIndex(limit);
@@ -88,10 +87,11 @@ public class InfoController {
 	}
 	
 	@RequestMapping("/infoView")
-	public ModelAndView infoView(@RequestParam int infoCode){
+	public ModelAndView infoView(@RequestParam int infoCode, int hit){
 		InfoDTO info = new InfoDTO();
 		info.setInfoCode(infoCode);
 		info = infoService.infoGet(info);
+		info.setHit(hit);
 		infoService.hitUpdate(info);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("categoryList", getMenu());
@@ -123,13 +123,13 @@ public class InfoController {
 	}
 
 	@RequestMapping("/infoDelete")
-	public ModelAndView infoDelete(@RequestParam int infoCode, @RequestParam int pg){
+	public ModelAndView infoDelete(@RequestParam int infoCode){
 		//info.setInfoCode(infoCode);
 		InfoDTO info = new InfoDTO();
 		info.setInfoCode(infoCode);
 		infoService.infoDelete(info);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/info/infoList.do?pg="+pg);
+		mav.setViewName("redirect:/info/infoList.do");
 		return mav;
 	}
 	

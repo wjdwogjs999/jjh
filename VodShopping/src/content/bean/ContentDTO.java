@@ -70,6 +70,10 @@ public class ContentDTO {
 	private String sword;
 	@Transient
 	private String searchType;
+	@Transient
+	private String iSortCol;
+	@Transient
+	private String sSortDir;
 	
 	
 	public String getSword() {
@@ -184,7 +188,21 @@ public class ContentDTO {
 		this.buyCount = buyCount;
 	}
 
-	
-	
+	public String getiSortCol() {
+		return iSortCol;
+	}
+
+	public void setiSortCol(String iSortCol) {
+		this.iSortCol = iSortCol;
+	}
+
+	public String getsSortDir() {
+		return sSortDir;
+	}
+
+	public void setsSortDir(String sSortDir) {
+		this.sSortDir = sSortDir;
+	}
+
 	
 }

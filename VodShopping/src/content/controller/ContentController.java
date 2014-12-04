@@ -294,11 +294,28 @@ public class ContentController {
 	@RequestMapping("/contentListGet")
 	public @ResponseBody void contentListGet(HttpServletResponse response, @RequestParam(required=false)int iDisplayStart, 
 			@RequestParam(required=false)int iDisplayLength, @RequestParam(required=false)String sSearch,
-			String sEcho){
-		System.out.println("시작 : "+iDisplayStart+", 페이지사이즈 : "+iDisplayLength+", 검색어 : "+sSearch);
+			String sEcho, int iSortCol_0, String sSortDir_0){
+		System.out.println("시작 : "+iDisplayStart+", 페이지사이즈 : "+iDisplayLength+", 검색어 : "+sSearch+", iSortCol_0 : "+iSortCol_0+", sSortDir_0 : "+sSortDir_0);
 		ContentDTO content = new ContentDTO();
 		content.setStartIndex(iDisplayStart);
 		content.setEndIndex(iDisplayLength);
+		//정렬을 위해 값넣어줌
+		switch (iSortCol_0) {
+		case 1:
+			content.setiSortCol("contentCode");
+			break;
+		case 2:
+			content.setiSortCol("contentName");
+			break;
+		case 3:
+			content.setiSortCol("price");
+			break;
+		case 4:
+			content.setiSortCol("director");
+			break;
+		}
+		content.setsSortDir(sSortDir_0);
+		//검색어 필터링
 		if(!sSearch.equals("")){
 			content.setSearchType("search");
 			content.setSword(sSearch);

@@ -42,8 +42,6 @@ public class InfoDAOImpl extends HibernateDaoSupport implements infoDAO {
 
 	@Override
 	public void updateHit(InfoDTO info) throws HibernateException{
-		 info.setHit(info.getHit()+1);
-         // 위 수정처리와는 다르게 update() 메소드를 활용
          getHibernateTemplate().update(info);    
 	}
 
@@ -62,7 +60,7 @@ public class InfoDAOImpl extends HibernateDaoSupport implements infoDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<InfoDTO> getNewInfo() {
-		return (List<InfoDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(InfoDTO.class).addOrder(Order.desc("logtime")), 0, 5);
+		return (List<InfoDTO>)getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(InfoDTO.class).addOrder(Order.desc("logtime")).addOrder(Order.desc("infoCode")), 0, 5);
 	}
 
 }

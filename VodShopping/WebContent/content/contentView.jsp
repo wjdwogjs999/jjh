@@ -3,6 +3,10 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript">
+
+window.twttr=(function(d,s,id){var t,js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return}js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);return window.twttr||(t={_e:[],ready:function(f){t._e.push(f)}})}(document,"script","twitter-wjs"));
+
+
 function cartInsert(id){
 	if(id==""){
 		alert("로그인을 하셔야 장바구니를 이용하실 수 있습니다.");
@@ -63,7 +67,9 @@ function videoStart(vod, contentCode){
 				<img src="../image/cyworld.gif" onclick="javascript:window.open('http://cyxso.cyworld.com/Login.sk','','width=500 height=400 scrollbars=yes');">
 				</div>
 				<div style="padding-left: 85px; margin-top: 10px">
-				<img src="../image/twitter.png" onclick="javascript:window.open('https://twitter.com/intent/tweet?text=${content.contentName}&url=http://172.16.33.98:8080/VodShopping/content/contentView.do?contentCode=${ content.contentCode}&rurl=http://castisVod.com','','width=500 height=400 scrollbars=yes');">
+				<a href="https://twitter.com/share">  
+  					<img class="twitter-mention-button" src="../image/twitter.png">
+  				</a>
 				<img src="../image/facebook.png" onclick="javascript:window.open('https://www.facebook.com/login.php','','width=500 height=400 scrollbars=yes');">
 				<img src="../image/c.png" onclick="javascript:window.open('http://cyxso.cyworld.com/PopUpLogin.sk','','width=500 height=400 scrollbars=yes');">
 				</div>

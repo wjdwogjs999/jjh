@@ -16,7 +16,7 @@ $(document).ready(function(){
 });
 
 function infoWrite(){
-	window.open("/VodShopping/info/infoWriteForm.do","","width=850 height=620 left=300 top=100");
+	window.open("/VodShopping/info/infoWriteForm.do","","width=700 height=500 left=100 top=50");
 }
 
 function loginCheck(id,action){
@@ -52,7 +52,7 @@ function loginCheck(id,action){
 <div style="float:left; margin-left:110px; position:absolute; width:80px"  class="menu">
 	<b style="cursor:pointer; height:20px">공지사항&nbsp;▼</b>
 	<ul style="display:none; position:relative; top:10px; width:150px; height:100%; border:1pt solid rgb(230,230,230); list-style-type:none; margin:0; padding:0; background-color:white;" class="submenu">
-		<li style="height:10px; margin:10px 15px"><a href="/VodShopping/info/infoList.do?pg=1">공지사항</a></li>
+		<li style="height:10px; margin:10px 15px"><a href="/VodShopping/info/infoList.do">공지사항</a></li>
 	</ul>
 </div>
 
@@ -86,7 +86,7 @@ function loginCheck(id,action){
 		<li style="height:10px; margin:10px 15px"><a href="#" onclick="javascript:infoWrite()">공지등록</a></li>
 		<li style="height:10px; margin:10px 15px"><a href="/VodShopping/main/category.do">카테고리관리</a></li>
 		<li style="height:10px; margin:10px 15px"><a href="/VodShopping/main/memberAdmin.do?pg=1">회원관리</a></li>
-		<li style="height:10px; margin:10px 15px"><a href="/VodShopping/main/contentAdmin.do?pg=1">컨텐츠관리</a></li>
+		<li style="height:10px; margin:10px 15px"><a href="/VodShopping/main/contentAdmin.do">컨텐츠관리</a></li>
 		<li style="height:10px; margin:10px 15px"><a href="/VodShopping/main/salesGraph.do">매출그래프보기</a></li>
 		<!-- <li style="height:10px; margin:10px 15px"><a href="/VodShopping/main/advertiseForm.do">광고배너관리</a></li> -->
 	</ul>
