@@ -2,5 +2,3 @@ jjh
 ===
 
 myRepository
-push
-asdasdas
